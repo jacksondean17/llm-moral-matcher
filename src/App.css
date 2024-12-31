@@ -1,0 +1,20 @@
+.llm-responses.blur {
+  filter: blur(4px);
+  pointer-events: none; /* So users can't highlight text */
+}
+
+.llm-responses.unblur {
+  filter: none;
+}
+
+.llm-responses {
+  transition: filter 0.4s ease;
+  margin: 1em 0;
+  padding: 1em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.llm-response {
+  margin-bottom: 1em;
+}
