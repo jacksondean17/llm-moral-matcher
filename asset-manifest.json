@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/llm-trolley-problems/static/css/main.e2cdbb38.css",
-    "main.js": "/llm-trolley-problems/static/js/main.8d0a91b0.js",
+    "main.js": "/llm-trolley-problems/static/js/main.fb6be991.js",
     "static/js/488.efd57b57.chunk.js": "/llm-trolley-problems/static/js/488.efd57b57.chunk.js",
     "index.html": "/llm-trolley-problems/index.html",
     "main.e2cdbb38.css.map": "/llm-trolley-problems/static/css/main.e2cdbb38.css.map",
-    "main.8d0a91b0.js.map": "/llm-trolley-problems/static/js/main.8d0a91b0.js.map",
+    "main.fb6be991.js.map": "/llm-trolley-problems/static/js/main.fb6be991.js.map",
     "488.efd57b57.chunk.js.map": "/llm-trolley-problems/static/js/488.efd57b57.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.e2cdbb38.css",
-    "static/js/main.8d0a91b0.js"
+    "static/js/main.fb6be991.js"
   ]
 }
