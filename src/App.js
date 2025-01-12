@@ -15,7 +15,7 @@ function App() {
   useEffect(() => {
     const fetchDilemmas = async () => {
       try {
-        const response = await fetch(`${process.env.PUBLIC_URL}/data/dilemmas_test.json`);
+        const response = await fetch(`${process.env.PUBLIC_URL}/data/dilemmas.json`);
         
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
