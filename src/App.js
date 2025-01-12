@@ -9,21 +9,19 @@ function App() {
   const [userAnswers, setUserAnswers] = useState([]);
   const [showResults, setShowResults] = useState(false);
   const [revealedAnswers, setRevealedAnswers] = useState([]);
+  const [modelScores, setModelScores] = useState(null);
+  const [bestMatch, setBestMatch] = useState(null);
 
   useEffect(() => {
     const fetchDilemmas = async () => {
       try {
-        const response = await fetch(`${process.env.PUBLIC_URL}/data/dilemmas.json`);
+        const response = await fetch(`${process.env.PUBLIC_URL}/data/dilemmas_test.json`);
         
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         
-        // Log the raw response text for debugging
         const text = await response.text();
-        console.log('Raw response:', text);
-        
-        // Try to parse the JSON
         let data;
         try {
           data = JSON.parse(text);
@@ -31,8 +29,6 @@ function App() {
           console.error('JSON Parse Error:', parseError);
           throw new Error('Failed to parse JSON response');
         }
-        
-        console.log('Parsed data:', data);
         
         if (!data || !data.dilemmas) {
           throw new Error('Invalid data format');
@@ -49,21 +45,42 @@ function App() {
     fetchDilemmas();
   }, []);
 
-  if (error) {
-    return (
-      <div className="error-container">
-        <h2>Error Loading Dilemmas</h2>
-        <p>{error}</p>
-        <pre>Check the console for more details</pre>
-      </div>
+  const calculateModelScores = () => {
+    const scores = Object.keys(dilemmas[0].llmResponses).reduce(
+      (acc, modelName) => ({ ...acc, [modelName]: 0 }),
+      {}
     );
+    
+    userAnswers.forEach((userAnswer, idx) => {
+      if (!userAnswer) return;
+      
+      const llmResponses = dilemmas[idx].llmResponses;
+      for (const modelName in llmResponses) {
+        // Extract just 'a' or 'b' from the answers
+        const llmAnswer = llmResponses[modelName].answer.toLowerCase().trim()[0];
+        const normalizedUserAnswer = userAnswer.toLowerCase().trim()[0];
+        
+        if (llmAnswer === normalizedUserAnswer && (llmAnswer === 'a' || llmAnswer === 'b')) {
+          scores[modelName] += 1;
+  }
   }
 
   if (!dilemmas.length) {
     return <div>Loading...</div>;
-  }
+        }
 
-  const currentDilemma = dilemmas[currentQuestionIndex];
+  if (!dilemmas.length) {
+    return <div>Loading...</div>;
+      }
+    });
+
+    const bestMatchModel = Object.keys(scores).reduce((a, b) =>
+      scores[a] > scores[b] ? a : b
+    );
+
+    setModelScores(scores);
+    setBestMatch(bestMatchModel);
+  };
 
   const handleSubmitAnswer = (choice) => {
     const updatedAnswers = [...userAnswers];
@@ -79,32 +96,15 @@ function App() {
     if (currentQuestionIndex < dilemmas.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     } else {
+      calculateModelScores();
       setShowResults(true);
     }
   };
 
   const handleSeeResultsNow = () => {
+    calculateModelScores();
     setShowResults(true);
   };
-
-  const modelAgreementScores = Object.keys(dilemmas[0].llmResponses).reduce(
-    (acc, modelName) => ({ ...acc, [modelName]: 0 }),
-    {}
-  );
-
-  userAnswers.forEach((userAnswer, idx) => {
-    if (!userAnswer) return;
-    const llmResponses = dilemmas[idx].llmResponses;
-    for (const modelName in llmResponses) {
-      if (llmResponses[modelName].answer === userAnswer) {
-        modelAgreementScores[modelName] += 1;
-      }
-    }
-  });
-
-  const bestMatchModel = Object.keys(modelAgreementScores).reduce((a, b) =>
-    modelAgreementScores[a] > modelAgreementScores[b] ? a : b
-  );
 
   const modelSummaries = {
     "gemini": "Gemini often emphasizes practical and balanced solutions.",
@@ -112,6 +112,20 @@ function App() {
     "gpt-4": "GPT-4 frequently considers multiple ethical perspectives.",
     "sonnet-3.5": "Claude often weighs both principles and consequences."
   };
+
+  if (error) {
+    return (
+      <div className="error-container">
+        <h2>Error Loading Dilemmas</h2>
+        <p>{error}</p>
+        <pre>Check the console for more details</pre>
+      </div>
+    );
+  }
+
+  if (!dilemmas.length) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="App">
@@ -121,13 +135,13 @@ function App() {
         <Results
           userAnswers={userAnswers}
           dilemmas={dilemmas}
-          modelAgreementScores={modelAgreementScores}
-          bestMatchModel={bestMatchModel}
+          modelAgreementScores={modelScores}
+          bestMatchModel={bestMatch}
           modelSummaries={modelSummaries}
         />
       ) : (
         <QuestionSection
-          currentDilemma={currentDilemma}
+          currentDilemma={dilemmas[currentQuestionIndex]}
           currentQuestionIndex={currentQuestionIndex}
           userAnswers={userAnswers}
           revealedAnswers={revealedAnswers}
@@ -141,7 +155,6 @@ function App() {
   );
 }
 
-// -- Question Section Component --
 function QuestionSection({
   currentDilemma,
   currentQuestionIndex,
@@ -160,9 +173,6 @@ function QuestionSection({
       <h3>{currentDilemma.question}</h3>
       <p>{currentDilemma.description}</p>
 
-      {/* Show choices only if user hasn't answered yet. 
-          Once answered, choices are disabled, but still visible.
-      */}
       <div className="choices">
         {currentDilemma.choices.map((choice, idx) => {
           const userAnswer = userAnswers[currentQuestionIndex];
@@ -179,7 +189,6 @@ function QuestionSection({
         })}
       </div>
 
-      {/* LLM responses (blur until user submits an answer) */}
       <div
         className={`llm-responses ${
           revealedAnswers[currentQuestionIndex] ? "unblur" : "blur"
@@ -195,9 +204,7 @@ function QuestionSection({
         ))}
       </div>
 
-      {/* Navigation Buttons */}
       <div className="navigation">
-        {/* Only show the "Next" or "See results" button if user has answered */}
         {userAnswers[currentQuestionIndex] !== undefined && (
           currentQuestionIndex < totalQuestions - 1 ? (
             <button onClick={onNextQuestion}>Next Question</button>
@@ -210,7 +217,6 @@ function QuestionSection({
   );
 }
 
-// -- Results Component --
 function Results({
   userAnswers,
   dilemmas,
@@ -241,7 +247,7 @@ function Results({
       </ol>
 
       <h3>Model Agreement Scores</h3>
-      {Object.entries(modelAgreementScores).map(([modelName, score]) => (
+      {modelAgreementScores && Object.entries(modelAgreementScores).map(([modelName, score]) => (
         <div key={modelName}>
           {modelName}: {score} matches
         </div>
