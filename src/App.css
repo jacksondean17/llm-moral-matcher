@@ -81,12 +81,18 @@ p {
   margin-bottom: 1em;
 }
 
+.navigation {
+  display: flex;
+  gap: 1em;
+  justify-content: center;
+  margin-top: 2em;
+}
+
 .navigation button {
   background-color: #4a90e2;
-  color: #fff;
+  color: white;
   border: none;
   padding: 0.75em 1.5em;
-  margin: 0.5em;
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s ease;

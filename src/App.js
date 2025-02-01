@@ -237,7 +237,10 @@ function QuestionSection({
       <div className="navigation">
         {userAnswers[currentQuestionIndex] !== undefined && (
           currentQuestionIndex < totalQuestions - 1 ? (
-            <button onClick={onNextQuestion}>Next Question</button>
+            <>
+              <button onClick={onNextQuestion}>Next Question</button>
+              <button onClick={onSeeResultsNow}>Skip to Results</button>
+            </>
           ) : (
             <button onClick={onSeeResultsNow}>See results</button>
           )
