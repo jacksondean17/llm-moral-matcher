@@ -163,6 +163,11 @@ function App() {
               modelAgreementScores={modelScores}
               bestMatchModel={bestMatch}
               modelSummaries={modelSummaries}
+              setCurrentPage={setCurrentPage}
+              setShowResults={setShowResults}
+              setCurrentQuestionIndex={setCurrentQuestionIndex}
+              setUserAnswers={setUserAnswers}
+              setRevealedAnswers={setRevealedAnswers}
             />
           ) : (
             dilemmas.length > 0 && (
@@ -256,6 +261,11 @@ function Results({
   modelAgreementScores,
   bestMatchModel,
   modelSummaries,
+  setCurrentPage,
+  setShowResults,
+  setCurrentQuestionIndex,
+  setUserAnswers,
+  setRevealedAnswers,
 }) {
   return (
     <div className="results-section">
@@ -294,6 +304,17 @@ function Results({
       ))}
 
       <h2>You agreed most with: {bestMatchModel}</h2>
+
+      <div className="results-buttons">
+        <button onClick={() => {
+          setCurrentPage('landing');
+          setShowResults(false);
+          setCurrentQuestionIndex(0);
+          setUserAnswers([]);
+          setRevealedAnswers(Array(dilemmas.length).fill(false));
+        }}>Start Over</button>
+        <button onClick={() => setCurrentPage('about')}>About</button>
+      </div>
     </div>
   );
 }

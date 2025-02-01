@@ -120,6 +120,27 @@ p {
   margin-top: 1.5em;
 }
 
+.results-buttons {
+  display: flex;
+  gap: 1em;
+  justify-content: center;
+  margin-top: 2em;
+}
+
+.results-buttons button {
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  padding: 0.75em 1.5em;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.results-buttons button:hover {
+  background-color: #357ab8;
+}
+
 .landing-page {
   text-align: center;
   padding: 4em 2em;
