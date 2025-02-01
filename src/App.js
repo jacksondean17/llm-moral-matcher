@@ -11,6 +11,29 @@ function App() {
   const [revealedAnswers, setRevealedAnswers] = useState([]);
   const [modelScores, setModelScores] = useState(null);
   const [bestMatch, setBestMatch] = useState(null);
+  const [currentPage, setCurrentPage] = useState('landing'); // Add this state
+
+  // Add Landing Page component
+  const LandingPage = () => (
+    <div className="landing-page">
+      <h1>What LLM Shares My Morals?</h1>
+      <div className="landing-buttons">
+        <button onClick={() => setCurrentPage('quiz')}>Start Quiz</button>
+        <button onClick={() => setCurrentPage('about')}>About</button>
+      </div>
+    </div>
+  );
+
+  // Add About Page component
+  const AboutPage = () => (
+    <div className="about-page">
+      <h1>About The Dilemma Lab</h1>
+      <p>This quiz explores how different Language Learning Models (LLMs) approach moral dilemmas.
+         By comparing your answers with those of various LLMs, we can see which AI model most closely
+         aligns with your moral reasoning.</p>
+      <button onClick={() => setCurrentPage('landing')}>Back</button>
+    </div>
+  );
 
   useEffect(() => {
     const fetchDilemmas = async () => {
@@ -123,36 +146,43 @@ function App() {
     );
   }
 
-  if (!dilemmas.length) {
-    return <div>Loading...</div>;
+  // Show different pages based on currentPage state
+  switch (currentPage) {
+    case 'landing':
+      return <LandingPage />;
+    case 'about':
+      return <AboutPage />;
+    case 'quiz':
+      return (
+        <div className="App">
+          <h1>The Dilemma Lab</h1>
+          {showResults ? (
+            <Results
+              userAnswers={userAnswers}
+              dilemmas={dilemmas}
+              modelAgreementScores={modelScores}
+              bestMatchModel={bestMatch}
+              modelSummaries={modelSummaries}
+            />
+          ) : (
+            dilemmas.length > 0 && (
+              <QuestionSection
+                currentDilemma={dilemmas[currentQuestionIndex]}
+                currentQuestionIndex={currentQuestionIndex}
+                userAnswers={userAnswers}
+                revealedAnswers={revealedAnswers}
+                onSubmitAnswer={handleSubmitAnswer}
+                onNextQuestion={handleNextQuestion}
+                onSeeResultsNow={handleSeeResultsNow}
+                totalQuestions={dilemmas.length}
+              />
+            )
+          )}
+        </div>
+      );
+    default:
+      return <LandingPage />;
   }
-
-  return (
-    <div className="App">
-      <h1>The Dilemma Lab</h1>
-
-      {showResults ? (
-        <Results
-          userAnswers={userAnswers}
-          dilemmas={dilemmas}
-          modelAgreementScores={modelScores}
-          bestMatchModel={bestMatch}
-          modelSummaries={modelSummaries}
-        />
-      ) : (
-        <QuestionSection
-          currentDilemma={dilemmas[currentQuestionIndex]}
-          currentQuestionIndex={currentQuestionIndex}
-          userAnswers={userAnswers}
-          revealedAnswers={revealedAnswers}
-          onSubmitAnswer={handleSubmitAnswer}
-          onNextQuestion={handleNextQuestion}
-          onSeeResultsNow={handleSeeResultsNow}
-          totalQuestions={dilemmas.length}
-        />
-      )}
-    </div>
-  );
 }
 
 function QuestionSection({
