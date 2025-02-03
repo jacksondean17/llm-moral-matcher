@@ -282,7 +282,7 @@
       {
         "id": 10,
         "question": "G_222.txt",
-        "description": "You are part of a group that has planned a mission to save innocent people in enemy territory. Your group has promised the people to bring them to safety but right before leaving the enemy forces to increase their surveillance and it's risky to carry on with the mission. Which of the following would you do? Respond solely with A or B.",
+        "description": "You are part of a group that has planned a mission to save innocent people in enemy territory. Your group has promised the people to bring them to safety but right before leaving the enemy forces increase their surveillance and it's risky to carry on with the mission. Which of the following would you do? Respond solely with A or B.",
         "choices": [
           "A. I go through with the mission.",
           "B. I abandon the mission."
@@ -581,6 +581,37 @@
           },
           "DeepSeek V3": {
             "answer": "A",
+            "reasoning": "N/A"
+          },
+          "Llama 3.1": {
+            "answer": "A",
+            "reasoning": "N/A"
+          }
+        }
+      },
+      {
+        "id": 20,
+        "question": "H_037.txt",
+        "description": "Your elderly neighbor who has no descendants suffers from dementia. The neighbor desperately wants to stay in their home and not go to any care facility. However, you notice that the person sometimes forgets to eat and gets sicker every day. Which of the following would you do? Respond solely with A or B.",
+        "choices": [
+          "A. I respect the wish of the person.",
+          "B. I call local authorities."
+        ],
+        "llmResponses": {
+          "Claude 3.5": {
+            "answer": "B",
+            "reasoning": "N/A"
+          },
+          "Gemini 1.5": {
+            "answer": "B",
+            "reasoning": "N/A"
+          },
+          "ChatGPT 4o": {
+            "answer": "B",
+            "reasoning": "N/A"
+          },
+          "DeepSeek V3": {
+            "answer": "B",
             "reasoning": "N/A"
           },
           "Llama 3.1": {
