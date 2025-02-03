@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
+import { ExternalLink, Github } from 'lucide-react';
 
 // Add Title component at the top level
 const Title = () => (
@@ -32,10 +33,75 @@ function App() {
   const AboutPage = () => (
     <div className="about-page">
       <Title />
-      <p>This quiz explores how different Language Learning Models (LLMs) approach moral dilemmas.
-         By comparing your answers with those of various LLMs, we can see which AI model most closely
-         aligns with your moral reasoning.</p>
-      <button onClick={() => setCurrentPage('landing')}>Back</button>
+      <div className="article-container">
+        <article className="prose">
+          <h1>Do AI Models Share Your Morals? The Challenge of AI Moral Alignment</h1>
+
+          <section>
+            <h2>Introduction</h2>
+            <p>
+              As AI systems become more integrated into our daily lives, understanding their moral decision-making becomes increasingly crucial. I set out to explore how different AI models approach moral dilemmas, and if any of them were particularly aligned with my own values.
+            </p>
+          </section>
+
+          <section>
+            <h2>The Challenge of Moral Alignment</h2>
+            <p>
+              One of the fundamental challenges in AI development is determining whose morals the AI should follow. Nick Bostrom, in his book Superintelligence, suggests several approaches. We could have AI adopt the "averaged" moral stance of humanity, or perhaps program it with "true" morals (assuming we could determine them). Some even suggest letting AI develop its own moral framework, arguing that everyone thinks their own moral model is correct anyway - so why not let the AI do the same?
+            </p>
+            <p>
+              The reality with current Large Language Models (LLMs) is quite different. Their moral stances typically reflect an aggregation of internet-based training data, filtered through the specific preferences of their parent companies via RLHF (Reinforcement Learning from Human Feedback). This raises interesting questions about whose values are really being encoded into these systems.
+            </p>
+          </section>
+
+          <section>
+            <h2>The Evolution of My Approach</h2>
+            <p>
+              I initially experimented with several different datasets, including an adaptation of the{' '}
+              <a href="https://en.wikipedia.org/wiki/Moral_foundations_theory#Moral_Foundations_Questionnaire" 
+                 className="external-link">
+                Moral Foundations Questionnaire
+                <ExternalLink className="icon" />
+              </a>
+              {' '}and attempted to replicate earlier studies using models like Llama2-70b. However, these early attempts highlighted some challenges. The abstract questions in the MFQ, comparing different moral axes like fairness versus sanctity, proved difficult for AIs (and myself!) to evaluate meaningfully.
+            </p>
+            <p>
+              This led me to focus on the more concrete scenarios from the MoralChoice paper (
+              <a href="http://arxiv.org/abs/2307.14324" 
+                 className="external-link">
+                arxiv.org/abs/2307.14324
+                <ExternalLink className="icon" />
+              </a>
+              ), published in July 2023. Their approach was remarkably robust - presenting clear, actionable choices in high-stakes scenarios that create genuine moral tension.
+            </p>
+          </section>
+
+          <section>
+            <h2>Key Findings</h2>
+            <p>
+              I identified 51 scenarios where all five of the current models I tested showed high confidence in their answers, with at least one disagreeing with the others. Surprisingly, this set had very little overlap with the most controversial scenarios from the original experiment - suggesting that either AI moral frameworks have evolved significantly, or that different model architectures approach these dilemmas in fundamentally different ways.
+            </p>
+          </section>
+
+          <section>
+            <h2>Looking Forward</h2>
+            <p>
+              This research raises important questions about AI moral alignment. Should we aim for consistency across AI models in moral decision-making? How do we handle scenarios where human moral intuitions are themselves divided? And what role should AI companies' training preferences play in shaping AI moral behavior?
+            </p>
+          </section>
+
+          <div className="action-buttons">
+            <button onClick={() => setCurrentPage('quiz')} className="primary-button">
+              Take the Quiz
+              <ExternalLink className="icon" />
+            </button>
+            <a href="https://github.com/yourusername/yourrepo" className="secondary-button">
+              <Github className="icon" />
+              View on GitHub
+            </a>
+          </div>
+        </article>
+      </div>
     </div>
   );
 
