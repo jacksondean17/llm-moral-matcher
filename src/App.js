@@ -22,6 +22,9 @@ function App() {
   const LandingPage = () => (
     <div className="landing-page">
       <Title />
+      <p className="summary">
+        Take this quiz to discover which AI language model's moral decision-making most closely aligns with your own.
+      </p>
       <div className="landing-buttons">
         <button onClick={() => setCurrentPage('quiz')}>Start Quiz</button>
         <button onClick={() => setCurrentPage('about')}>About</button>

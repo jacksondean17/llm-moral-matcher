@@ -154,6 +154,13 @@ p {
   color: #4a90e2;
 }
 
+.landing-page .summary {
+  margin: 1rem auto 2rem;
+  max-width: 600px;
+  font-size: 1.2rem;
+  color: #666;
+}
+
 .landing-buttons {
   display: flex;
   gap: 2em;
