@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import './App.css'; // Optional styling
+import './App.css';
 
+// Add Title component at the top level
+const Title = () => (
+  <h1>Which LLM Shares My Morals?</h1>
+);
 
 function App() {
   const [dilemmas, setDilemmas] = useState([]);
@@ -13,10 +17,10 @@ function App() {
   const [bestMatch, setBestMatch] = useState(null);
   const [currentPage, setCurrentPage] = useState('landing'); // Add this state
 
-  // Add Landing Page component
+  // Modify LandingPage to remove duplicate title
   const LandingPage = () => (
     <div className="landing-page">
-      <h1>Which LLM Shares My Morals?</h1>
+      <Title />
       <div className="landing-buttons">
         <button onClick={() => setCurrentPage('quiz')}>Start Quiz</button>
         <button onClick={() => setCurrentPage('about')}>About</button>
@@ -24,10 +28,10 @@ function App() {
     </div>
   );
 
-  // Add About Page component
+  // Modify AboutPage to remove duplicate title
   const AboutPage = () => (
     <div className="about-page">
-      <h1>About The Dilemma Lab</h1>
+      <Title />
       <p>This quiz explores how different Language Learning Models (LLMs) approach moral dilemmas.
          By comparing your answers with those of various LLMs, we can see which AI model most closely
          aligns with your moral reasoning.</p>
@@ -38,7 +42,7 @@ function App() {
   useEffect(() => {
     const fetchDilemmas = async () => {
       try {
-        const response = await fetch(`${process.env.PUBLIC_URL}/data/dilemmas.json`);
+        const response = await fetch(`${process.env.PUBLIC_URL}/data/new_dilemmas.json`);
         
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -155,7 +159,7 @@ function App() {
     case 'quiz':
       return (
         <div className="App">
-          <h1>The Dilemma Lab</h1>
+          <Title />
           {showResults ? (
             <Results
               userAnswers={userAnswers}
@@ -205,7 +209,6 @@ function QuestionSection({
       <h2>
         Question {currentQuestionIndex + 1} of {totalQuestions}
       </h2>
-      <h3>{currentDilemma.question}</h3>
       <p>{currentDilemma.description}</p>
 
       <div className="choices">
@@ -274,38 +277,18 @@ function Results({
         Below is a summary of your answers, how each LLM answered, and which
         model you aligned with the most.
       </p>
-
-      <ol>
-        {dilemmas.map((dilemma, idx) => (
-          <li key={dilemma.id}>
-            <strong>{dilemma.question}:</strong> <br />
-            <em>Your Answer: {userAnswers[idx]}</em> <br />
-            {Object.entries(dilemma.llmResponses).map(([modelName, data]) => (
-              <div key={modelName}>
-                {modelName} chose: <strong>{data.answer}</strong>
-              </div>
-            ))}
-          </li>
+      <div style={{margin: "2rem 0"}}>
+        <h3>Model Agreement Scores</h3>
+        {modelAgreementScores && Object.entries(modelAgreementScores).map(([modelName, score]) => (
+          <div key={modelName} style={{margin: "0.5rem 0"}}>
+            {modelName}: {score} matches
+          </div>
         ))}
-      </ol>
-
-      <h3>Model Agreement Scores</h3>
-      {modelAgreementScores && Object.entries(modelAgreementScores).map(([modelName, score]) => (
-        <div key={modelName}>
-          {modelName}: {score} matches
-        </div>
-      ))}
-
-      <h3>Model Summaries</h3>
-      {Object.keys(modelSummaries).map((modelName) => (
-        <div key={modelName}>
-          <strong>{modelName}:</strong> {modelSummaries[modelName]}
-        </div>
-      ))}
+      </div>
 
       <h2>You agreed most with: {bestMatchModel}</h2>
 
-      <div className="results-buttons">
+      <div className="results-buttons" style={{marginTop: "2rem"}}>
         <button onClick={() => {
           setCurrentPage('landing');
           setShowResults(false);
@@ -315,6 +298,21 @@ function Results({
         }}>Start Over</button>
         <button onClick={() => setCurrentPage('about')}>About</button>
       </div>
+
+      <ol className="dilemma-list">
+        {dilemmas.map((dilemma, idx) => (
+          <li key={dilemma.id} style={{marginBottom: "2rem"}}>
+            {dilemma.description}<br /><br />
+            <em><strong>Your Answer: {userAnswers[idx]}</strong></em> <br /><br />
+            {Object.entries(dilemma.llmResponses).map(([modelName, data]) => (
+              <div key={modelName} style={{margin: "0.5rem 0"}}>
+                {modelName} chose: <strong>{data.answer}</strong>
+              </div>
+            ))}
+          </li>
+        ))}
+      </ol>
+
     </div>
   );
 }
