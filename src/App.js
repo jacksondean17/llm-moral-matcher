@@ -113,7 +113,11 @@ function App() {
             </button>
             <a href="https://github.com/jacksondean17/llm-moral-matcher" className="secondary-button">
               <Github className="icon" />
-              View on GitHub
+              View Source Repository
+            </a>
+            <a href="https://github.com/jacksondean17/moralchoice" className="secondary-button">
+              <Github className="icon" />
+              View Data Analysis Repository
             </a>
           </div>
         </article>
