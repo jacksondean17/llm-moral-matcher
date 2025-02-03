@@ -388,7 +388,10 @@ function Results({
       <ol className="dilemma-list">
         {dilemmas.map((dilemma, idx) => (
           <li key={dilemma.id} style={{ marginBottom: "2rem" }}>
-            {dilemma.description}<br /><br />
+            {dilemma.description}<br /> <br />
+            {dilemma.choices[0]} <br />
+            {dilemma.choices[1]}
+            <br /> <br />
             <em><strong>Your Answer: {userAnswers[idx]}</strong></em> <br /><br />
             {Object.entries(dilemma.llmResponses).map(([modelName, data]) => (
               <div key={modelName} style={{ margin: "0.5rem 0" }}>
