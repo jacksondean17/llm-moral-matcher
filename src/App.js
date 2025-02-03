@@ -298,12 +298,10 @@ function QuestionSection({
           revealedAnswers[currentQuestionIndex] ? "unblur" : "blur"
         }`}
       >
-        <h4>LLM Answers & Reasoning:</h4>
+        <h4>LLM Answers:</h4>
         {Object.entries(currentDilemma.llmResponses).map(([modelName, data]) => (
           <div key={modelName} className="llm-response">
             <strong>{modelName}:</strong> <em>{data.answer}</em>
-            <br />
-            <small>Reasoning: {data.reasoning}</small>
           </div>
         ))}
       </div>
