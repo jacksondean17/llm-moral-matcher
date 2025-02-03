@@ -16,7 +16,7 @@ function App() {
   // Add Landing Page component
   const LandingPage = () => (
     <div className="landing-page">
-      <h1>What LLM Shares My Morals?</h1>
+      <h1>Which LLM Shares My Morals?</h1>
       <div className="landing-buttons">
         <button onClick={() => setCurrentPage('quiz')}>Start Quiz</button>
         <button onClick={() => setCurrentPage('about')}>About</button>
