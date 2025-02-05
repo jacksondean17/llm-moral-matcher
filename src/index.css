@@ -11,3 +11,18 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* Override prose header alignment and h3 styling */
+.prose h1,
+.prose h2,
+.prose h3 {
+  text-align: left !important;
+}
+
+.prose h3 {
+  color: #666 !important;
+  font-size: 1.25rem !important;
+  margin-top: 1.5em !important;
+  margin-bottom: 0.5em !important;
+  font-weight: 500 !important;
+}
