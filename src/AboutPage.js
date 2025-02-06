@@ -90,6 +90,7 @@ const AboutPage = ({ setCurrentPage }) => (
                 <li>Investigating whether certain types of moral dilemmas consistently produce more inter-model disagreement</li>
                 <li>Investigating whether a given model is consistent in its values across scenarios that test similar values</li>
                 <li>Exploring potential correlations between model decisions and their training sources or company philosophies, while being mindful of confirmation bias in interpreting results</li>
+                <li>Translating scenarios to different languages and observing if there are any biases dependent on the language that the model operates in. Inspired by <a href="https://arxiv.org/abs/2407.02273" className="external-link">this paper<ExternalLink className="icon"/></a> studying multilingual trolley problems.</li>
             </ul>
             </p>
             <h3>Comparison of Model Behavior Between Generations:</h3>
