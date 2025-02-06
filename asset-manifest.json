@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/llm-moral-matcher/static/css/main.176b710e.css",
-    "main.js": "/llm-moral-matcher/static/js/main.df44b6c5.js",
+    "main.js": "/llm-moral-matcher/static/js/main.96eaf02e.js",
     "static/js/488.b27415c4.chunk.js": "/llm-moral-matcher/static/js/488.b27415c4.chunk.js",
     "index.html": "/llm-moral-matcher/index.html",
     "main.176b710e.css.map": "/llm-moral-matcher/static/css/main.176b710e.css.map",
-    "main.df44b6c5.js.map": "/llm-moral-matcher/static/js/main.df44b6c5.js.map",
+    "main.96eaf02e.js.map": "/llm-moral-matcher/static/js/main.96eaf02e.js.map",
     "488.b27415c4.chunk.js.map": "/llm-moral-matcher/static/js/488.b27415c4.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.176b710e.css",
-    "static/js/main.df44b6c5.js"
+    "static/js/main.96eaf02e.js"
   ]
 }
