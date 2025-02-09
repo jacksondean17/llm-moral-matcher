@@ -2,6 +2,11 @@
 
 A web application that helps you discover which Large Language Model (LLM) most closely aligns with your moral values and ethical decision-making.
 
+
+## Live Demo
+
+Visit the live application at: https://jacksondean.space/llm-moral-matcher/
+
 ## Overview
 
 This interactive tool presents you with a series of moral dilemmas and compares your responses with those of various LLM models to find your closest match. The application provides insights into how different AI models approach ethical decision-making.
@@ -9,15 +14,7 @@ This interactive tool presents you with a series of moral dilemmas and compares 
 ## Data Analysis
 Data was collected and analysed using [my fork](https://github.com/jacksondean17/moralchoice) of the [MoralChoice](https://github.com/ninodimontalcino/moralchoice) reporsitory.
 
-## Features
-
-- Interactive moral dilemma questionnaire
-- Real-time comparison with LLM responses
-- Detailed results analysis
-- Model agreement scores
-- Mobile-friendly interface
-
-## Getting Started
+## Building
 
 1. Install dependencies:
 ```sh
@@ -47,7 +44,3 @@ npm start
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Live Demo
-
-Visit the live application at: https://jacksondean.space/llm-moral-matcher/
